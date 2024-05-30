@@ -7,11 +7,13 @@ function [h1, h2]=first_assignment(pos_1, dt)
 dh=.01; %spatial step size (1 cm)
 nx=round(10/dh); % nx= how many steps,  size of the domain = nx*dh (10 m)
 
+
 %% Simulation Parameters
-iimax=10000; %simulation will run for iimax iterations
 rho1=1.21;c1=341; k1=(c1^2)*rho1; %first media constants
 rho2=48.4;c2=341;k2=(c2^2)*rho2; %second media constants
 rho3=1.21; c3=341; k3=(c3^2)*rho3; % Third media constants
+dt = dh/max(c1,c2);
+iimax=15/341/dt; %simulation will run for iimax iterations
 
 %% Sizes calculation for each medium segment ensuring they sum to nx
 % Since dividing nx by 3 might not yield an integer, especially after rounding, calculate integer values for the segment sizes of each medium.
@@ -46,7 +48,7 @@ for ii=1:iimax
     ux(1)=w(ii)/c1/rho1;    %excitation (beggining 1st medium)
    
     h1=[h1 p(round(pos_1))]; % Record the pressure near the sound source of the entire domain 
-    h2=[h2 p(round(end/1.25))]; % Record the pressure once it had pass the load (absorpive material)  
+    h2=[h2 p(round(601))]; % Record the pressure once it had pass the load (absorpive material)  
 
     %% PLOT IN TERMS OF SOUND PRESSURE 
     % blue_line= pressure, red_line= particle velocity
